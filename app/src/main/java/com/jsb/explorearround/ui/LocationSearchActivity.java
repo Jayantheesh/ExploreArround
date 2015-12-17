@@ -1,22 +1,21 @@
 package com.jsb.explorearround.ui;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.view.Menu;
 import android.widget.Toast;
 
 import com.jsb.explorearround.Controller;
 import com.jsb.explorearround.R;
 import com.jsb.explorearround.parser.LocationResultsModel;
-
 /**
  * Created by JSB on 12/5/15.
  */
@@ -24,7 +23,6 @@ public class LocationSearchActivity extends AppCompatActivity {
 
     private static final String TAG = "LocationSearchActivity";
     private Toolbar mToolbar;
-    private EditText mLocationText;
 
     private ControllerResults mControllerCallback;
 
@@ -45,27 +43,9 @@ public class LocationSearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
         //Initialise the Controller from here
         mControllerCallback = new ControllerResults();
         Controller.getsInstance(this).addResultCallback(mControllerCallback);
-
-        mLocationText = (EditText)findViewById(R.id.location);
-        //mLocationText.setOnClickListener(this);
-
-        mLocationText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    String locationText = mLocationText.getText().toString();
-                    if (!TextUtils.isEmpty(locationText)) {
-                        Controller.getInstance().getLocationDetails(LocationSearchActivity.this, locationText);
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
     }
 
     @Override
@@ -86,6 +66,31 @@ public class LocationSearchActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
         Controller.getInstance().removeResultCallback(mControllerCallback);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        // Retrieve the SearchView and plug it into SearchManager
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String locationText) {
+                if (!TextUtils.isEmpty(locationText)) {
+                    Controller.getInstance().getLocationDetails(LocationSearchActivity.this, locationText);
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+        return true;
     }
 
     /**

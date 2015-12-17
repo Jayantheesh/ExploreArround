@@ -27,6 +27,7 @@
     <string name="text_no_phone_error">No valid phone number found</string>
     <string name="text_no_app_error">No application can handle this request</string>
     <string name="text_share_info">Share Information</string>
+    <string name="search_location_hint">Search your location</string>
 
 
     <!-- Strings related to Settings -->
