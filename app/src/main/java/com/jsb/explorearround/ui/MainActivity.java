@@ -360,35 +360,33 @@ public class MainActivity extends AppCompatActivity implements
             return position;
         }
 
-        public class Holder {
-            TextView tv;
-            ImageView img;
-        }
-
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            Holder holder = new Holder();
-            View rowView;
+            if (convertView == null) {
+                View rowView;
 
-            rowView = inflater.inflate(R.layout.gridview_holder, null);
-            holder.tv = (TextView) rowView.findViewById(R.id.textView1);
-            holder.img = (ImageView) rowView.findViewById(R.id.imageView1);
+                rowView = inflater.inflate(R.layout.gridview_holder, null);
+                TextView locationName = (TextView) rowView.findViewById(R.id.textView1);
+                ImageView locationImage = (ImageView) rowView.findViewById(R.id.imageView1);
 
-            holder.tv.setText(displayNames[position]);
-            holder.img.setImageResource(imageId[position]);
-            rowView.setOnClickListener(new View.OnClickListener() {
+                locationName.setText(displayNames[position]);
+                locationImage.setImageResource(imageId[position]);
+                rowView.setOnClickListener(new View.OnClickListener() {
 
-                @Override
-                public void onClick(View v) {
-                    // check if GPS enabled
-                    if (LocationTracker.getsInstance(MainActivity.this).isLocationEnabled(MainActivity.this)) {
-                        //Invoke the Controller API to get the response back from Google server
-                        Controller.getInstance().getInformation(MainActivity.this, names[position],
-                                RADIUS, keywords[position]);
+                    @Override
+                    public void onClick(View v) {
+                        // check if GPS enabled
+                        if (LocationTracker.getsInstance(MainActivity.this).isLocationEnabled(MainActivity.this)) {
+                            //Invoke the Controller API to get the response back from Google server
+                            Controller.getInstance().getInformation(MainActivity.this, names[position],
+                                    RADIUS, keywords[position]);
+                        }
                     }
-                }
-            });
-            return rowView;
+                });
+                return rowView;
+            } else {
+                return convertView;
+            }
         }
 
     }
