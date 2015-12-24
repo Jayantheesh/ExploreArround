@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jsb.explorearround.R;
@@ -28,6 +29,7 @@ public class RecyclerViewAdapter extends RecyclerView
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
+        ImageView photo;
         TextView name;
         TextView address;
         TextView distance;
@@ -35,6 +37,7 @@ public class RecyclerViewAdapter extends RecyclerView
 
         public DataObjectHolder(View itemView) {
             super(itemView);
+            photo = (ImageView) itemView.findViewById(R.id.photo);
             name = (TextView) itemView.findViewById(R.id.name);
             address = (TextView) itemView.findViewById(R.id.address);
             distance = (TextView) itemView.findViewById(R.id.distance);
@@ -70,6 +73,9 @@ public class RecyclerViewAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
+        if (mDataset.get(position).getPhotos() != null) {
+            Log.d("RecyclerViewAdapter", "photoUrl: " + mDataset.get(position).getPhotos()[0].getPhotoUrl()[0]);
+        }
         holder.name.setText(mDataset.get(position).getmName());
         holder.address.setText(mDataset.get(position).getmAddress());
         holder.distance.setText(mDataset.get(position).getmDistance());
