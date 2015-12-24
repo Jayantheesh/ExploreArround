@@ -360,23 +360,18 @@ public class MainActivity extends AppCompatActivity implements
             return position;
         }
 
-        public class Holder {
-            TextView tv;
-            ImageView img;
-        }
-
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            Holder holder = new Holder();
-            View rowView;
+            Log.d("CustomAdapter", "pos: " + position + " v: " + convertView);
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.gridview_holder, null);
+            }
+            TextView locationName = (TextView) convertView.findViewById(R.id.textView1);
+            ImageView locationImage = (ImageView) convertView.findViewById(R.id.imageView1);
 
-            rowView = inflater.inflate(R.layout.gridview_holder, null);
-            holder.tv = (TextView) rowView.findViewById(R.id.textView1);
-            holder.img = (ImageView) rowView.findViewById(R.id.imageView1);
-
-            holder.tv.setText(displayNames[position]);
-            holder.img.setImageResource(imageId[position]);
-            rowView.setOnClickListener(new View.OnClickListener() {
+            locationName.setText(displayNames[position]);
+            locationImage.setImageResource(imageId[position]);
+            convertView.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
@@ -388,7 +383,7 @@ public class MainActivity extends AppCompatActivity implements
                     }
                 }
             });
-            return rowView;
+            return convertView;
         }
 
     }

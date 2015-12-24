@@ -18,6 +18,17 @@ public class Photos {
     @SerializedName("photo_reference")
     private String photo_reference;
 
+    @SerializedName("html_attributions")
+    private String[] photoUrl;
+
+    public String[] getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String[] photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
     public String getHeight() {
         return height;
     }
