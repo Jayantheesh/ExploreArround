@@ -210,18 +210,18 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         }
     }
 
-    private void shrinkOpenHoursLayout(boolean shrink) {
-        if (shrink) {
+    private void shrinkOpenHoursLayout(boolean collapse) {
+        if (collapse) {
             if (mUpDownButton == null) {
                 mUpDownButton = (Button) mOpenHoursLayout.findViewById(R.id.updown_btn);
             }
-            mUpDownButton.setBackground(ContextCompat.getDrawable(this, R.drawable.arrow_up));
+            mUpDownButton.setBackground(ContextCompat.getDrawable(this, R.drawable.arrow_down));
             mWeekDayItemLayout.setVisibility(View.GONE);
         } else { /* Spread mode */
             if (mUpDownButton == null) {
                 mUpDownButton = (Button) mOpenHoursLayout.findViewById(R.id.updown_btn);
             }
-            mUpDownButton.setBackground(ContextCompat.getDrawable(this,R.drawable.arrow_down));
+            mUpDownButton.setBackground(ContextCompat.getDrawable(this,R.drawable.arrow_up));
             mWeekDayItemLayout.setVisibility(View.VISIBLE);
             if (mResults != null && mResults.getOpening_hours() != null) {
                 String[] weekStatus = mResults.getOpening_hours().getWeekday_text();

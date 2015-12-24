@@ -362,31 +362,28 @@ public class MainActivity extends AppCompatActivity implements
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
+            Log.d("CustomAdapter", "pos: " + position + " v: " + convertView);
             if (convertView == null) {
-                View rowView;
-
-                rowView = inflater.inflate(R.layout.gridview_holder, null);
-                TextView locationName = (TextView) rowView.findViewById(R.id.textView1);
-                ImageView locationImage = (ImageView) rowView.findViewById(R.id.imageView1);
-
-                locationName.setText(displayNames[position]);
-                locationImage.setImageResource(imageId[position]);
-                rowView.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        // check if GPS enabled
-                        if (LocationTracker.getsInstance(MainActivity.this).isLocationEnabled(MainActivity.this)) {
-                            //Invoke the Controller API to get the response back from Google server
-                            Controller.getInstance().getInformation(MainActivity.this, names[position],
-                                    RADIUS, keywords[position]);
-                        }
-                    }
-                });
-                return rowView;
-            } else {
-                return convertView;
+                convertView = inflater.inflate(R.layout.gridview_holder, null);
             }
+            TextView locationName = (TextView) convertView.findViewById(R.id.textView1);
+            ImageView locationImage = (ImageView) convertView.findViewById(R.id.imageView1);
+
+            locationName.setText(displayNames[position]);
+            locationImage.setImageResource(imageId[position]);
+            convertView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    // check if GPS enabled
+                    if (LocationTracker.getsInstance(MainActivity.this).isLocationEnabled(MainActivity.this)) {
+                        //Invoke the Controller API to get the response back from Google server
+                        Controller.getInstance().getInformation(MainActivity.this, names[position],
+                                RADIUS, keywords[position]);
+                    }
+                }
+            });
+            return convertView;
         }
 
     }
