@@ -10,13 +10,15 @@ import com.jsb.explorearround.parser.Photos;
 public class DataObject {
 
     private String mName;
+    private String icon;
     private String mAddress;
     private String mStatus;
     private String mDistance;
     private Photos[] photos;
 
-    public DataObject(String name, String address, String status, String distance, Photos[] photos) {
+    public DataObject(String name, String icon, String address, String status, String distance, Photos[] photos) {
         mName = name;
+        icon = icon;
         mAddress = address;
         mStatus = status;
         mDistance = distance;
@@ -25,6 +27,10 @@ public class DataObject {
 
     public String getmAddress() {
         return mAddress;
+    }
+
+    public String getIcon() {
+        return icon;
     }
 
     public String getmDistance() {
@@ -46,6 +52,7 @@ public class DataObject {
     public static class DataBuilder {
         Context context;
         String name;
+        String icon;
         String address;
         String status;
         String distance;
@@ -57,6 +64,11 @@ public class DataObject {
 
         public DataBuilder setName(String name) {
             this.name = name;
+            return this;
+        }
+
+        public DataBuilder setIcon(String icon) {
+            this.icon = icon;
             return this;
         }
 
@@ -81,7 +93,7 @@ public class DataObject {
         }
 
         public DataObject build() {
-            return new DataObject(name, address, status, distance, photoUrl);
+            return new DataObject(name, icon, address, status, distance, photoUrl);
         }
     }
 }

@@ -119,6 +119,7 @@ public class ResultsActivity extends AppCompatActivity {
 
             results.add(index, new DataObject.DataBuilder(this)
                     .setName(res[index].getName())
+                    .setIcon(res[index].getIcon())
                     .setAddress(res[index].getVicinity())
                     .setDistance(calculateDst(res[index].getGeometry().getLocation(), lat, longitude))
                     .setStatus(status)
