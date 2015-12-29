@@ -27,7 +27,7 @@ import retrofit.RestAdapter;
 public class Controller {
 
     private static final String TAG = "Controller";
-    private static final String BASE_URL = "https://maps.googleapis.com";
+    public static final String BASE_URL = "https://maps.googleapis.com";
     private static Controller sInstance;
     private final Context mContext;
     private final HashSet<Result> mListeners = new HashSet<Result>();

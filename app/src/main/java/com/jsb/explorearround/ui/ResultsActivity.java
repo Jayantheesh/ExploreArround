@@ -100,11 +100,11 @@ public class ResultsActivity extends AppCompatActivity {
     }
 
     private ArrayList<DataObject> getDataSet() {
-        ArrayList results = new ArrayList<DataObject>();
+        ArrayList<DataObject> results = new ArrayList<>();
         Results[] res = mResults.getResults();
         PreferencesHelper preference = PreferencesHelper.getPreferences(this);
         Double lat = Double.valueOf(preference.getLatitude());
-        Double longtitude = Double.valueOf(preference.getLongtitude());
+        Double longitude = Double.valueOf(preference.getLongtitude());
         for (int index = 0; index < res.length; index++) {
             OpenHours openHrs = res[index].getOpening_hours();
             String status = "";
@@ -116,10 +116,15 @@ public class ResultsActivity extends AppCompatActivity {
                     status = "CLOSED";
                 }
             }
-            DataObject obj = new DataObject(res[index].getName(),
-                    res[index].getVicinity(), status,
-                    calculateDst(res[index].getGeometry().getLocation(), lat, longtitude));
-            results.add(index, obj);
+
+            results.add(index, new DataObject.DataBuilder(this)
+                    .setName(res[index].getName())
+                    .setIcon(res[index].getIcon())
+                    .setAddress(res[index].getVicinity())
+                    .setDistance(calculateDst(res[index].getGeometry().getLocation(), lat, longitude))
+                    .setStatus(status)
+                    .setPhotos(res[index].getPhotos())
+                    .build());
         }
         return results;
     }

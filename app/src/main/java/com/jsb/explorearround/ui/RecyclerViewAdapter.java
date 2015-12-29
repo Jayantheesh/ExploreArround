@@ -3,14 +3,19 @@ package com.jsb.explorearround.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.jsb.explorearround.Controller;
 import com.jsb.explorearround.R;
+import com.jsb.explorearround.utils.AppConstants;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -28,6 +33,7 @@ public class RecyclerViewAdapter extends RecyclerView
     public static class DataObjectHolder extends RecyclerView.ViewHolder
             implements View
             .OnClickListener {
+        ImageView photo;
         TextView name;
         TextView address;
         TextView distance;
@@ -35,6 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView
 
         public DataObjectHolder(View itemView) {
             super(itemView);
+            photo = (ImageView) itemView.findViewById(R.id.photo);
             name = (TextView) itemView.findViewById(R.id.name);
             address = (TextView) itemView.findViewById(R.id.address);
             distance = (TextView) itemView.findViewById(R.id.distance);
@@ -70,6 +77,9 @@ public class RecyclerViewAdapter extends RecyclerView
 
     @Override
     public void onBindViewHolder(DataObjectHolder holder, int position) {
+        if (mDataset.get(position).getPhotos() != null) {
+            Log.d("RecyclerViewAdapter", "photoUrl: " + mDataset.get(position).getPhotos()[0].getPhotoUrl()[0]);
+        }
         holder.name.setText(mDataset.get(position).getmName());
         holder.address.setText(mDataset.get(position).getmAddress());
         holder.distance.setText(mDataset.get(position).getmDistance());
@@ -78,6 +88,18 @@ public class RecyclerViewAdapter extends RecyclerView
             holder.open_status.setTextColor(Color.RED);
         } else {
             holder.open_status.setTextColor(mContext.getResources().getColor(android.R.color.holo_green_dark));
+        }
+        if (mDataset.get(position).getPhotos() != null) {
+            String url = Controller.BASE_URL + "/maps/api/place/photo" + "?maxwidth=400&photoreference=" +
+                    mDataset.get(position).getPhotos()[0].getPhoto_reference() + "&key=" + AppConstants.API_KEY;
+            Picasso.with(mContext).load(url)
+                    .placeholder(R.drawable.ic_launcher)
+                    .into(holder.photo);
+
+            holder.photo.setTag(R.string.photo_url, url);
+        } else {
+            holder.photo.setTag(R.string.photo_url, null);
+            holder.photo.setImageResource(R.drawable.ic_launcher);
         }
     }
 
