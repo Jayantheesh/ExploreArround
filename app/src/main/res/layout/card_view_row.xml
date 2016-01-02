@@ -9,7 +9,7 @@
         android:id="@+id/card_view"
         android:layout_gravity="center"
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardCornerRadius="1dp"
         app:contentPadding="9dp"
@@ -47,20 +47,28 @@
                 <TextView
                     android:id="@+id/address"
                     android:layout_width="fill_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_below="@+id/name"
                     android:textSize="12sp"
                     android:text="Street, City"
                     android:ellipsize="marquee"
                     android:textColor="@android:color/holo_blue_dark" />
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/address"
+                    android:stepSize="1"
+                    android:clickable="false"
+                    style="?android:attr/ratingBarStyleSmall" />
 
                 <TextView
                     android:id="@+id/status"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_below="@+id/address"
+                    android:layout_below="@id/ratingBar"
                     android:textSize="12sp"
                     android:text="OPEN"
                     android:layout_alignParentBottom="true"

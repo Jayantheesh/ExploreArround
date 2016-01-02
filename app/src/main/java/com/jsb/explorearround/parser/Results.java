@@ -40,6 +40,9 @@ public class Results {
     @SerializedName("photos")
     private Photos[] photos;
 
+    @SerializedName("rating")
+    private String rating;
+
     public Photos[] getPhotos() {
         return photos;
     }
@@ -118,5 +121,9 @@ public class Results {
 
     public void setVicinity(String vicinity) {
         this.vicinity = vicinity;
+    }
+
+    public String getRating() {
+        return rating;
     }
 }

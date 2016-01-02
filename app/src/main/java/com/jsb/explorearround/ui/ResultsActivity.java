@@ -124,6 +124,7 @@ public class ResultsActivity extends AppCompatActivity {
                     .setDistance(calculateDst(res[index].getGeometry().getLocation(), lat, longitude))
                     .setStatus(status)
                     .setPhotos(res[index].getPhotos())
+                    .setRating(res[index].getRating())
                     .build());
         }
         return results;
