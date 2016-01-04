@@ -80,135 +80,135 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:id="@+id/linearlayout"
-                android:weightSum="100">
                 <LinearLayout
-                    android:id="@+id/phone_layout"
-                    android:layout_width="85dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:baselineAligned="false"
-                    android:orientation="vertical"
-                    android:weightSum="25">
-
-                    <ImageView
-                        android:id="@+id/phone_image"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_width="50dp"
-                        android:layout_height="25dp"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/phone"
-                        android:layout_marginBottom="5dp"/>
-
-                    <TextView
-                        android:id="@+id/phone_text"
-                        android:text="@string/action_call"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        android:textColor="@color/color_primary"
-                        android:layout_marginBottom="5dp"
-                        android:layout_below="@+id/phone_image"/>
-                </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/direction_layout"
-                android:layout_width="85dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:baselineAligned="false"
-                android:orientation="vertical"
-                android:weightSum="25">
-
-                <ImageView
-                    android:id="@+id/direction_image"
-                    android:layout_gravity="center"
-                    android:layout_width="50dp"
-                    android:layout_height="25dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/map"
-                    android:layout_marginBottom="5dp"/>
-
-                <TextView
-                    android:id="@+id/direction_text"
-                    android:text="@string/action_direction"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="15sp"
-                    android:textColor="@color/color_primary"
-                    android:layout_marginBottom="5dp"
-                    android:layout_below="@+id/direction_image"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/share_layout"
-                android:layout_width="85dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:baselineAligned="false"
-                android:orientation="vertical"
-                android:weightSum="25">
-                <ImageView
-                    android:id="@+id/share_image"
-                    android:layout_gravity="center"
-                    android:layout_width="50dp"
-                    android:layout_height="25dp"
-                    android:layout_marginTop="5dp"
-                    android:src="@drawable/share"
-                    android:layout_marginBottom="5dp"/>
-
-                <TextView
-                    android:id="@+id/share_text"
-                    android:text="@string/action_share"
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="15sp"
-                    android:textColor="@color/color_primary"
-                    android:layout_marginBottom="5dp"
-                    android:layout_below="@+id/share_image"/>
-            </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/website_layout"
-                    android:layout_width="85dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:baselineAligned="false"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/linearlayout"
                     android:weightSum="100">
-                    <ImageView
-                        android:id="@+id/web_image"
-                        android:layout_gravity="center"
-                        android:layout_width="50dp"
-                        android:layout_height="25dp"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/web"
-                        android:layout_marginBottom="5dp"/>
-
-                    <TextView
-                        android:id="@+id/web_text"
-                        android:text="@string/action_website"
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/phone_layout"
+                        android:layout_width="85dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:textSize="15sp"
-                        android:textColor="@color/color_primary"
-                        android:layout_marginBottom="5dp"
-                        android:layout_below="@+id/web_image"/>
-                   </LinearLayout>
+                        android:layout_gravity="left"
+                        android:baselineAligned="false"
+                        android:orientation="vertical"
+                        android:weightSum="25">
+
+                        <ImageView
+                            android:id="@+id/phone_image"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/phone"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:id="@+id/phone_text"
+                            android:text="@string/action_call"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:textColor="@color/color_primary"
+                            android:layout_marginBottom="5dp"
+                            android:layout_below="@+id/phone_image"/>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/direction_layout"
+                        android:layout_width="85dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:baselineAligned="false"
+                        android:orientation="vertical"
+                        android:weightSum="25">
+
+                        <ImageView
+                            android:id="@+id/direction_image"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/map"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:id="@+id/direction_text"
+                            android:text="@string/action_direction"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:textColor="@color/color_primary"
+                            android:layout_marginBottom="5dp"
+                            android:layout_below="@+id/direction_image"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/share_layout"
+                        android:layout_width="85dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:baselineAligned="false"
+                        android:orientation="vertical"
+                        android:weightSum="25">
+                        <ImageView
+                            android:id="@+id/share_image"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/share"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:id="@+id/share_text"
+                            android:text="@string/action_share"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:textColor="@color/color_primary"
+                            android:layout_marginBottom="5dp"
+                            android:layout_below="@+id/share_image"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/website_layout"
+                        android:layout_width="85dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:baselineAligned="false"
+                        android:orientation="vertical"
+                        android:weightSum="100">
+                        <ImageView
+                            android:id="@+id/web_image"
+                            android:layout_gravity="center"
+                            android:layout_width="50dp"
+                            android:layout_height="25dp"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/web"
+                            android:layout_marginBottom="5dp"/>
+
+                        <TextView
+                            android:id="@+id/web_text"
+                            android:text="@string/action_website"
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="15sp"
+                            android:textColor="@color/color_primary"
+                            android:layout_marginBottom="5dp"
+                            android:layout_below="@+id/web_image"/>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <View
@@ -237,15 +237,15 @@
                             android:layout_marginTop="5dp"
                             android:src="@drawable/webaddress"
                             android:layout_marginBottom="5dp"/>
-                    <TextView
-                        android:id="@+id/weblink"
-                        android:autoLink="web|all"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:gravity="start"
-                        android:layout_marginTop="10dp"
-                        android:textSize="15sp"/>
+                        <TextView
+                            android:id="@+id/weblink"
+                            android:autoLink="web|all"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="start"
+                            android:layout_marginTop="10dp"
+                            android:textSize="15sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/phonelayout"
@@ -260,15 +260,15 @@
                             android:layout_marginTop="5dp"
                             android:src="@drawable/phone"
                             android:layout_marginBottom="5dp"/>
-                    <TextView
-                        android:id="@+id/phone"
-                        android:autoLink="web|all"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:gravity="start"
-                        android:layout_marginTop="10dp"
-                        android:textSize="15sp"/>
+                        <TextView
+                            android:id="@+id/phone"
+                            android:autoLink="web|all"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="start"
+                            android:layout_marginTop="10dp"
+                            android:textSize="15sp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -282,15 +282,15 @@
                             android:layout_marginTop="5dp"
                             android:src="@drawable/location"
                             android:layout_marginBottom="5dp"/>
-                    <TextView
-                        android:id="@+id/vicinity"
-                        android:autoLink="web|all"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:gravity="start"
-                        android:textSize="15sp"
-                        android:layout_marginTop="10dp"/>
+                        <TextView
+                            android:id="@+id/vicinity"
+                            android:autoLink="web|all"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="start"
+                            android:textSize="15sp"
+                            android:layout_marginTop="10dp"/>
                     </LinearLayout>
                     <LinearLayout
                         android:id="@+id/ratingBarLayout"
@@ -299,14 +299,14 @@
                         android:orientation="horizontal"
                         android:layout_marginTop="10dp">
 
-                    <TextView
-                        android:id="@+id/rating"
-                        android:layout_width="30dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:gravity="start"
-                        android:textSize="15sp"
-                        android:layout_marginTop="10dp"/>
+                        <TextView
+                            android:id="@+id/rating"
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:gravity="start"
+                            android:textSize="15sp"
+                            android:layout_marginTop="10dp"/>
 
                         <RatingBar
                             android:id="@+id/ratingBar"

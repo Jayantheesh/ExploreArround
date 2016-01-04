@@ -15,14 +15,16 @@ public class DataObject {
     private String mStatus;
     private String mDistance;
     private Photos[] photos;
+    private String rating;
 
-    public DataObject(String name, String icon, String address, String status, String distance, Photos[] photos) {
+    public DataObject(String name, String icon, String address, String status, String distance, Photos[] photos, String ratingValue) {
         mName = name;
         icon = icon;
         mAddress = address;
         mStatus = status;
         mDistance = distance;
         this.photos = photos;
+        rating = ratingValue;
     }
 
     public String getmAddress() {
@@ -49,6 +51,10 @@ public class DataObject {
         return photos;
     }
 
+    public String getRating() {
+        return rating;
+    }
+
     public static class DataBuilder {
         Context context;
         String name;
@@ -57,6 +63,7 @@ public class DataObject {
         String status;
         String distance;
         Photos[] photoUrl;
+        String rating;
 
         public DataBuilder(Context activity) {
             this.context = activity;
@@ -92,8 +99,13 @@ public class DataObject {
             return this;
         }
 
+        public DataBuilder setRating(String rating) {
+            this.rating = rating;
+            return this;
+        }
+
         public DataObject build() {
-            return new DataObject(name, icon, address, status, distance, photoUrl);
+            return new DataObject(name, icon, address, status, distance, photoUrl, rating);
         }
     }
 }

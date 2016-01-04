@@ -3,13 +3,13 @@ package com.jsb.explorearround.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.jsb.explorearround.Controller;
@@ -38,6 +38,7 @@ public class RecyclerViewAdapter extends RecyclerView
         TextView address;
         TextView distance;
         TextView open_status;
+        RatingBar rating;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
@@ -46,6 +47,7 @@ public class RecyclerViewAdapter extends RecyclerView
             address = (TextView) itemView.findViewById(R.id.address);
             distance = (TextView) itemView.findViewById(R.id.distance);
             open_status = (TextView) itemView.findViewById(R.id.status);
+            rating = (RatingBar) itemView.findViewById(R.id.ratingBar);
             Log.d(TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
@@ -100,6 +102,9 @@ public class RecyclerViewAdapter extends RecyclerView
         } else {
             holder.photo.setTag(R.string.photo_url, null);
             holder.photo.setImageResource(R.drawable.ic_launcher);
+        }
+        if (mDataset.get(position).getRating() != null) {
+            holder.rating.setRating(Float.parseFloat(mDataset.get(position).getRating()));
         }
     }
 
