@@ -227,10 +227,10 @@ public class MainActivity extends AppCompatActivity implements
         String text = "";
 
         if (cityName != null) {
-            text = cityName;
+            text = cityName + ", " ;
         }
         if (countryName != null) {
-            text = text + ", " + countryName;
+            text = text + countryName;
         }
         currentLocation.setText(text);
     }
