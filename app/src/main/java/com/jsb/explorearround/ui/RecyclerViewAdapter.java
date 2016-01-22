@@ -38,7 +38,8 @@ public class RecyclerViewAdapter extends RecyclerView
         TextView address;
         TextView distance;
         TextView open_status;
-        RatingBar rating;
+        RatingBar ratingBar;
+        TextView rating;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
@@ -47,8 +48,8 @@ public class RecyclerViewAdapter extends RecyclerView
             address = (TextView) itemView.findViewById(R.id.address);
             distance = (TextView) itemView.findViewById(R.id.distance);
             open_status = (TextView) itemView.findViewById(R.id.status);
-            rating = (RatingBar) itemView.findViewById(R.id.ratingBar);
-            Log.d(TAG, "Adding Listener");
+            ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
+            rating = (TextView) itemView.findViewById(R.id.rating);
             itemView.setOnClickListener(this);
         }
 
@@ -105,7 +106,10 @@ public class RecyclerViewAdapter extends RecyclerView
 
         }
         if (mDataset.get(position).getRating() != null) {
-            holder.rating.setRating(Float.parseFloat(mDataset.get(position).getRating()));
+            holder.ratingBar.setRating(Float.parseFloat(mDataset.get(position).getRating()));
+            holder.rating.setText(mDataset.get(position).getRating());
+        } else {
+            holder.rating.setText("Not rated");
         }
     }
 
