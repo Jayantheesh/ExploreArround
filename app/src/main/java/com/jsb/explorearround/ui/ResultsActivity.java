@@ -111,9 +111,9 @@ public class ResultsActivity extends AppCompatActivity {
             if (openHrs != null) {
                 boolean open = openHrs.getOpen_now();
                 if (open) {
-                    status = "OPEN";
+                    status = "Open";
                 } else {
-                    status = "CLOSED";
+                    status = "Closed";
                 }
             }
 

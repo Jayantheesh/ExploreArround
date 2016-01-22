@@ -38,7 +38,8 @@ public class RecyclerViewAdapter extends RecyclerView
         TextView address;
         TextView distance;
         TextView open_status;
-        RatingBar rating;
+        RatingBar ratingBar;
+        TextView rating;
 
         public DataObjectHolder(View itemView) {
             super(itemView);
@@ -47,8 +48,8 @@ public class RecyclerViewAdapter extends RecyclerView
             address = (TextView) itemView.findViewById(R.id.address);
             distance = (TextView) itemView.findViewById(R.id.distance);
             open_status = (TextView) itemView.findViewById(R.id.status);
-            rating = (RatingBar) itemView.findViewById(R.id.ratingBar);
-            Log.d(TAG, "Adding Listener");
+            ratingBar = (RatingBar) itemView.findViewById(R.id.ratingBar);
+            rating = (TextView) itemView.findViewById(R.id.rating);
             itemView.setOnClickListener(this);
         }
 
@@ -95,16 +96,20 @@ public class RecyclerViewAdapter extends RecyclerView
             String url = Controller.BASE_URL + "/maps/api/place/photo" + "?maxwidth=400&photoreference=" +
                     mDataset.get(position).getPhotos()[0].getPhoto_reference() + "&key=" + AppConstants.API_KEY;
             Picasso.with(mContext).load(url)
-                    .placeholder(R.drawable.ic_launcher)
                     .into(holder.photo);
-
+            Log.e(TAG, "Icon=" + mDataset.get(position).getIcon());
             holder.photo.setTag(R.string.photo_url, url);
         } else {
+            Picasso.with(mContext).load(mDataset.get(position).getIcon())
+                    .into(holder.photo);
             holder.photo.setTag(R.string.photo_url, null);
-            holder.photo.setImageResource(R.drawable.ic_launcher);
+
         }
         if (mDataset.get(position).getRating() != null) {
-            holder.rating.setRating(Float.parseFloat(mDataset.get(position).getRating()));
+            holder.ratingBar.setRating(Float.parseFloat(mDataset.get(position).getRating()));
+            holder.rating.setText(mDataset.get(position).getRating());
+        } else {
+            holder.rating.setText("Not rated");
         }
     }
 

@@ -6,25 +6,36 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Toast;
 
 import com.jsb.explorearround.Controller;
 import com.jsb.explorearround.R;
+import com.jsb.explorearround.parser.LocationResults;
 import com.jsb.explorearround.parser.LocationResultsModel;
+
+import java.util.ArrayList;
+
 /**
  * Created by JSB on 12/5/15.
  */
 public class LocationSearchActivity extends AppCompatActivity {
 
     private static final String TAG = "LocationSearchActivity";
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     private Toolbar mToolbar;
-
     private ControllerResults mControllerCallback;
+
+    private static LocationResultsModel mResults = null;
 
     public static void actionLocationSearchActivity(Activity fromActivity) {
         Intent i = new Intent(fromActivity, LocationSearchActivity.class);
@@ -35,13 +46,18 @@ public class LocationSearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location_search);
+        setContentView(R.layout.activity_location_search_card_view);
 
         // Attaching the layout to the toolbar object
         mToolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
         //Initialise the Controller from here
         mControllerCallback = new ControllerResults();
@@ -66,6 +82,17 @@ public class LocationSearchActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
         Controller.getInstance().removeResultCallback(mControllerCallback);
+    }
+
+    private ArrayList<LocationSearchDataObject> getDataSet() {
+        ArrayList<LocationSearchDataObject> results = new ArrayList<>();
+        LocationResults[] res = mResults.getResults();
+        for (int index = 0; index < res.length; index++) {
+            results.add(index, new LocationSearchDataObject.DataBuilder(this)
+                    .setName(res[index].getFormatted_address())
+                    .build());
+        }
+        return results;
     }
 
     @Override
@@ -109,16 +136,25 @@ public class LocationSearchActivity extends AppCompatActivity {
                     }
                     int resultLen = status.getResults().length;
                     if (resultLen > 0) {
-                        Toast.makeText(LocationSearchActivity.this, "Address=" + status.getResults()[0].getFormatted_address()
-                                        + " Lat=" + status.getResults()[0].getGeometry().getLocation().getLatitude()
-                                        + " Long=" + status.getResults()[0].getGeometry().getLocation().getLongtitude(),
-                                Toast.LENGTH_SHORT).show();
-//                        if (resultLen == 1) {
+                        mResults = status;
+                        mAdapter = new LocationSearchRVAdapter(getDataSet(), LocationSearchActivity.this);
+                        mRecyclerView.setAdapter(mAdapter);
+                        ((LocationSearchRVAdapter) mAdapter).setOnItemClickListener(new LocationSearchRVAdapter
+                                .MyClickListener() {
+                            @Override
+                            public void onItemClick(int position, View v) {
+                                Toast.makeText(LocationSearchActivity.this, "Address=" + mResults.getResults()[position].getFormatted_address()
+                                                + " Lat=" + mResults.getResults()[position].getGeometry().getLocation().getLatitude()
+                                                + " Long=" + mResults.getResults()[position].getGeometry().getLocation().getLongtitude(),
+                                        Toast.LENGTH_SHORT).show();
+//                            if (resultLen == 1) {
 //                            LocationTracker.getsInstance(LocationSearchActivity.this).updateLocationPref(
 //                                    status.getResults()[0].getFormatted_address(),
 //                                    status.getResults()[0].getGeometry().getLocation().getLatitude(),
 //                                    status.getResults()[0].getGeometry().getLocation().getLongtitude());
 //                        }
+                            }
+                        });
                     } else {
                         Toast.makeText(LocationSearchActivity.this, "No search results found", Toast.LENGTH_SHORT).show();
                     }
