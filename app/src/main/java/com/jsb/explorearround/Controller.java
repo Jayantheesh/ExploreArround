@@ -241,7 +241,7 @@ public class Controller {
                 Log.d(TAG, "Long " + results[0].getGeometry().getLocation().getLongtitude());
                 Log.d(TAG, "icon " + results[0].getIcon());
                 Log.d(TAG, "id " + results[0].getId());
-                Log.e(TAG, "Vicinity " + results[0].getVicinity());
+                Log.d(TAG, "Vicinity " + results[0].getVicinity());
             }
 
             synchronized (mListeners) {

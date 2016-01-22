@@ -10,7 +10,7 @@ import com.jsb.explorearround.parser.Photos;
 public class DataObject {
 
     private String mName;
-    private String icon;
+    private String mIcon;
     private String mAddress;
     private String mStatus;
     private String mDistance;
@@ -19,7 +19,7 @@ public class DataObject {
 
     public DataObject(String name, String icon, String address, String status, String distance, Photos[] photos, String ratingValue) {
         mName = name;
-        icon = icon;
+        mIcon = icon;
         mAddress = address;
         mStatus = status;
         mDistance = distance;
@@ -32,7 +32,7 @@ public class DataObject {
     }
 
     public String getIcon() {
-        return icon;
+        return mIcon;
     }
 
     public String getmDistance() {
