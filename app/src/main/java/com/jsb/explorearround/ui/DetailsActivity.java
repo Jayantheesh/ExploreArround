@@ -3,16 +3,21 @@ package com.jsb.explorearround.ui;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -24,15 +29,20 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.jsb.explorearround.Controller;
 import com.jsb.explorearround.R;
 import com.jsb.explorearround.parser.Location;
 import com.jsb.explorearround.parser.Result;
 import com.jsb.explorearround.parser.Reviews;
 import com.jsb.explorearround.utils.AppConstants;
 import com.jsb.explorearround.utils.PreferencesHelper;
+import com.squareup.picasso.Picasso;
 
+import java.net.URI;
 import java.text.DecimalFormat;
 
+import static android.util.TypedValue.COMPLEX_UNIT_DIP;
+import static android.util.TypedValue.applyDimension;
 /**
  * Created by JSB on 10/24/15.
  */
@@ -69,6 +79,8 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
     private TextView mWeekdayStatus;
     private TextView mWeekdayHours;
     private Button mUpDownButton;
+
+    private LinearLayoutCompat mImageGallery;
 
     public static void actionLaunchResultsActivity(Activity fromActivity, Result res) {
         Intent i = new Intent(fromActivity, DetailsActivity.class);
@@ -112,6 +124,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         mDirection.setOnClickListener(this);
         mShare.setOnClickListener(this);
         mWebsite.setOnClickListener(this);
+        mImageGallery = (LinearLayoutCompat) findViewById(R.id.imageGallery);
 
         if (mResults == null) {
             finish();
@@ -171,6 +184,44 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        if ((mResults.getPhotos().length != 0)) {
+            //String[] urls = new String[mResults.getPhotos().length];
+            for (int i = 0; i < mResults.getPhotos().length; i++ ) {
+                String url = Controller.BASE_URL + "/maps/api/place/photo" + "?maxwidth=400&photoreference=" +
+                        mResults.getPhotos()[i].getPhoto_reference() + "&key=" + AppConstants.API_KEY;
+                mImageGallery.addView(addDynamicImageView(url));
+            }
+        }
+
+    }
+
+    private float getDpToPixel(final int dp) {
+        Resources r = getResources();
+        return applyDimension(COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
+    }
+
+    private ImageView addDynamicImageView(final String url) {
+        final ImageView imageView = new ImageView(this);
+        LinearLayoutCompat.LayoutParams lp = new LinearLayoutCompat.LayoutParams(
+                (int) getDpToPixel(100),
+                (int) getDpToPixel(100));
+        lp.setMargins(0, 0, 10, 0);
+        imageView.setLayoutParams(lp);
+        imageView.setClickable(true);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO
+                Toast.makeText(DetailsActivity.this, "ToDO ", Toast.LENGTH_SHORT).show();
+            }
+        });
+        Picasso.with(this)
+                .load(url)
+                .placeholder(R.drawable.beauty)
+                .into(imageView);
+        return imageView;
     }
 
     private String calculateDst(Location location) {

@@ -3,6 +3,7 @@ package com.jsb.explorearround.ui;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,9 +42,6 @@ public class ViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
 
         // Declare Variables
-        TextView txtrank;
-        TextView txtcountry;
-        TextView txtpopulation;
         ImageView imgflag;
 
         mInflater = (LayoutInflater) mContext
@@ -53,11 +51,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         // Locate the ImageView in viewpager_item.xml
         imgflag = (ImageView) itemView.findViewById(R.id.image);
-        // Capture position and set to the ImageView
-        //imgflag.setImageResource(flag[position]);
-
-        imgflag.setScaleType(ImageView.ScaleType.FIT_XY);
-
+        imgflag.setScaleType(ImageView.ScaleType.MATRIX);
         Picasso.with(mContext)
                 .load(mUrl[position])
                 .placeholder(R.drawable.beauty)
