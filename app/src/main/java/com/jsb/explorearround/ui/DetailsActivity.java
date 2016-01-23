@@ -8,11 +8,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +36,6 @@ import com.jsb.explorearround.utils.AppConstants;
 import com.jsb.explorearround.utils.PreferencesHelper;
 import com.squareup.picasso.Picasso;
 
-import java.net.URI;
 import java.text.DecimalFormat;
 
 import static android.util.TypedValue.COMPLEX_UNIT_DIP;
@@ -190,7 +187,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
             for (int i = 0; i < mResults.getPhotos().length; i++ ) {
                 String url = Controller.BASE_URL + "/maps/api/place/photo" + "?maxwidth=400&photoreference=" +
                         mResults.getPhotos()[i].getPhoto_reference() + "&key=" + AppConstants.API_KEY;
-                mImageGallery.addView(addDynamicImageView(url));
+                mImageGallery.addView(addDynamicImageView(url, i));
             }
         }
 
@@ -201,7 +198,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         return applyDimension(COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
 
-    private ImageView addDynamicImageView(final String url) {
+    private ImageView addDynamicImageView(final String url, final int currentPhoto) {
         final ImageView imageView = new ImageView(this);
         LinearLayoutCompat.LayoutParams lp = new LinearLayoutCompat.LayoutParams(
                 (int) getDpToPixel(100),
@@ -213,8 +210,8 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
-                Toast.makeText(DetailsActivity.this, "ToDO ", Toast.LENGTH_SHORT).show();
+                PhotoViewerActivity.actionLaunchPhotoViewerActivity(DetailsActivity.this,
+                        currentPhoto, mResults.getPhotos());
             }
         });
         Picasso.with(this)

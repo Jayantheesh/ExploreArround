@@ -42,4 +42,5 @@
         <item>1</item>
     </string-array>
     <string name="photo_url">photo url</string>
+    <string name="title_activity_photo_viewer">PhotoViewerActivity</string>
 </resources>
