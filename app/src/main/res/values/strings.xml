@@ -43,4 +43,8 @@
     </string-array>
     <string name="photo_url">photo url</string>
     <string name="title_activity_photo_viewer">PhotoViewerActivity</string>
+    <string name="more">More</string>
+    <string name="module_launch">Module Launch</string>
+    <string name="today_timing">Today\'s timing: </string>
+    <string name="closed">Closed</string>
 </resources>

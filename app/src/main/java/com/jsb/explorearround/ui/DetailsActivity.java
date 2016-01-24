@@ -4,20 +4,18 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +35,9 @@ import com.jsb.explorearround.utils.PreferencesHelper;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 import static android.util.TypedValue.COMPLEX_UNIT_DIP;
 import static android.util.TypedValue.applyDimension;
@@ -49,34 +50,30 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
 
     private static final String TAG = "DetailsActivity";
     private static Result mResults = null;
-    private TextView mWebAddress;
-    private TextView mPhoneNumber;
-    private TextView mVicinity;
-    private TextView mRating;
-    private TextView mName;
-    private TextView mReviews;
-    private TextView mDistance;
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private Toolbar toolbar;
-    private RatingBar mRatingBar;
 
-    private LinearLayout mPhone;
-    private LinearLayout mDirection;
-    private LinearLayout mShare;
-    private LinearLayout mWebsite;
+    // 1st Card view
+    private TextView mPlaceName;
+    private TextView mVicinity;
+    private LinearLayoutCompat mRatingBarLayout;
+    private AppCompatRatingBar mRatingBar;
+    private TextView mRating;
+    private TextView mRatingCount;
+    private TextView mDistance;
+    private TextView mOpenStatus;
 
-    private LinearLayout mWebDetails;
-    private LinearLayout mPhoneDetails;
-    private LinearLayout mRatingBarLayout;
+    //2nd card view
+    private LinearLayoutCompat mDirections;
+    private LinearLayoutCompat mShare;
+    private LinearLayoutCompat mWebDetails;
+    private LinearLayoutCompat mPhoneDetails;
+    private TextView mWebAddress;
+    private TextView mPhoneNumber;
+    private LinearLayoutCompat mTimingLayout;
 
-    private LinearLayout mOpenHoursLayout;
-    private LinearLayout mWeekDayItemLayout;
-    private TextView mOpenHourText;
-    private TextView mWeekdayStatus;
-    private TextView mWeekdayHours;
-    private Button mUpDownButton;
-
+    //3rd Card view
     private LinearLayoutCompat mImageGallery;
 
     public static void actionLaunchResultsActivity(Activity fromActivity, Result res) {
@@ -90,80 +87,82 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_details);
-        mWebAddress = (TextView) findViewById(R.id.weblink);
-        mPhoneNumber = (TextView) findViewById(R.id.phone);
-        mVicinity = (TextView) findViewById(R.id.vicinity);
-        mRating = (TextView) findViewById(R.id.rating);
-        mName = (TextView) findViewById(R.id.name);
-        mReviews = (TextView) findViewById(R.id.reviews);
-        mDistance = (TextView) findViewById(R.id.distance);
-
-        mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
-        mPhone = (LinearLayout) findViewById(R.id.phone_layout);
-        mDirection = (LinearLayout) findViewById(R.id.direction_layout);
-        mShare = (LinearLayout) findViewById(R.id.share_layout);
-        mWebsite = (LinearLayout) findViewById(R.id.website_layout);
-
-        mOpenHoursLayout = (LinearLayout) findViewById(R.id.open_hours_layout);
-        mOpenHourText = (TextView) findViewById(R.id.open_status_text);
-        mUpDownButton = (Button) findViewById(R.id.updown_btn);
-        mUpDownButton.setOnClickListener(this);
-        mWeekDayItemLayout = (LinearLayout) findViewById(R.id.weekday_item_layout);
-
-        mWeekdayStatus =(TextView) findViewById(R.id.weekday_text);
-        mWeekdayHours =(TextView) findViewById(R.id.weekday_hours);
-
-        mWebDetails = (LinearLayout)findViewById(R.id.weblayout);
-        mPhoneDetails = (LinearLayout)findViewById(R.id.phonelayout);
-        mRatingBarLayout = (LinearLayout)findViewById(R.id.ratingBarLayout);
-
-        mPhone.setOnClickListener(this);
-        mDirection.setOnClickListener(this);
-        mShare.setOnClickListener(this);
-        mWebsite.setOnClickListener(this);
-        mImageGallery = (LinearLayoutCompat) findViewById(R.id.imageGallery);
-
         if (mResults == null) {
             finish();
             return;
         }
+
+        //Place details - 1st Card view
+        mPlaceName =(TextView) findViewById(R.id.place_name);
+        mPlaceName.setText(mResults.getName());
+
+        mVicinity = (TextView) findViewById(R.id.vicinity);
+        mVicinity.setText(mResults.getVicinity());
+
+        mRatingBarLayout = (LinearLayoutCompat)findViewById(R.id.rating_bar);
+        mRatingBar = (AppCompatRatingBar) mRatingBarLayout.findViewById(R.id.rating_star);
+
+        mRating = (TextView) findViewById(R.id.rating);
+        mRating.setText(mResults.getRating());
+
+        mRatingCount =(TextView) findViewById(R.id.rating_count);
+        mDistance = (TextView) findViewById(R.id.distance);
+        String rating = mResults.getRating();
+        if (rating != null) {
+            mRatingBar.setRating(Float.valueOf(mResults.getRating()));
+            Reviews[] reviews = mResults.getReviews();
+            if (reviews != null) {
+                String count = "- " + String.valueOf(reviews.length) + " Reviews";
+                mRatingCount.setText(count);
+                mDistance.setText(calculateDst(mResults.getGeometry().getLocation()));
+            } else {
+                mRatingBarLayout.setEnabled(false);
+            }
+        } else {
+            mRatingBar.setEnabled(false);
+            mRatingBarLayout.setVisibility(View.GONE);
+        }
+
+        mOpenStatus = (TextView) findViewById(R.id.open_now);
+        mOpenStatus.setText("Open");
+        //mOpenStatus.setTextColor(getColor(R.color.color_red));
+
+        //Navigation - 2nd Card view
+        mDirections = (LinearLayoutCompat) findViewById(R.id.direction);
+        mShare = (LinearLayoutCompat) findViewById(R.id.share);
+        mWebDetails = (LinearLayoutCompat)findViewById(R.id.website_layout);
+        mWebAddress =(TextView) findViewById(R.id.website);
         if (mResults.getWebsite() != null) {
             mWebAddress.setText(mResults.getWebsite());
         } else {
             mWebDetails.setVisibility(View.GONE);
         }
 
+        mPhoneDetails = (LinearLayoutCompat)findViewById(R.id.call_layout);
+        mPhoneNumber =(TextView) findViewById(R.id.call);
         if (mResults.getInternational_phone_number() != null) {
             mPhoneNumber.setText(mResults.getInternational_phone_number());
         } else {
             mPhoneDetails.setVisibility(View.GONE);
         }
 
-        mVicinity.setText(mResults.getVicinity());
-        mRating.setText(mResults.getRating());
-        mName.setText(mResults.getName());
+        mPhoneDetails.setOnClickListener(this);
+        mDirections.setOnClickListener(this);
+        mShare.setOnClickListener(this);
+        mWebDetails.setOnClickListener(this);
+        updatePlaceTiming();
 
-        String rating = mResults.getRating();
-        if (rating != null) {
-            mRatingBar.setRating(Float.valueOf(mResults.getRating()));
-            Reviews[] reviews = mResults.getReviews();
-            if (reviews != null) {
-                String count = "- " + String.valueOf(reviews.length) + " reviews";
-                mReviews.setText(count);
-
-                mDistance.setText(" - " + calculateDst(mResults.getGeometry().getLocation()));
-            } else {
-                mReviews.setEnabled(false);
+        //Photo - 3rd Card view
+        mImageGallery = (LinearLayoutCompat) findViewById(R.id.imageGallery);
+        if ((mResults.getPhotos() != null && mResults.getPhotos().length != 0)) {
+            //String[] urls = new String[mResults.getPhotos().length];
+            for (int i = 0; i < mResults.getPhotos().length; i++ ) {
+                String url = Controller.BASE_URL + "/maps/api/place/photo" + "?maxwidth=400&photoreference=" +
+                        mResults.getPhotos()[i].getPhoto_reference() + "&key=" + AppConstants.API_KEY;
+                mImageGallery.addView(addDynamicImageView(url, i));
             }
-
-        } else {
-            mRatingBar.setEnabled(false);
-            mRatingBarLayout.setVisibility(View.GONE);
         }
 
-        if (mResults.getOpening_hours() == null) {
-            mOpenHoursLayout.setVisibility(View.GONE);
-        }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -181,16 +180,91 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
 
-        if ((mResults.getPhotos().length != 0)) {
-            //String[] urls = new String[mResults.getPhotos().length];
-            for (int i = 0; i < mResults.getPhotos().length; i++ ) {
-                String url = Controller.BASE_URL + "/maps/api/place/photo" + "?maxwidth=400&photoreference=" +
-                        mResults.getPhotos()[i].getPhoto_reference() + "&key=" + AppConstants.API_KEY;
-                mImageGallery.addView(addDynamicImageView(url, i));
+    /**
+     * Update place timing details
+     */
+    private void updatePlaceTiming() {
+        mTimingLayout = (LinearLayoutCompat)findViewById(R.id.id_timings);
+        if(mResults == null || mResults.getOpening_hours() == null) {
+            mTimingLayout.setVisibility(View.GONE);
+            return;
+        }
+        final LinearLayoutCompat weekly_timings = (LinearLayoutCompat) mTimingLayout.findViewById(R.id.id_week_timing);
+        final String[] weekStatus = mResults.getOpening_hours().getWeekday_text();
+
+        mTimingLayout.setVisibility(View.VISIBLE);
+        TextView todayTime = (TextView) mTimingLayout.findViewById(R.id.id_today_hours);
+        todayTime.append(getTodayTiming(Arrays.asList(weekStatus)));
+        final TextView more = (TextView) mTimingLayout.findViewById(R.id.id_hours_more);
+        more.setPaintFlags(more.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getResources().getString(R.string.more).
+                        equalsIgnoreCase(more.getText().toString())) {
+                    if (weekStatus.length  == 0) {
+                        return;
+                    }
+
+                    more.setText(getResources().getString(R.string.closed));
+                    weekly_timings.setVisibility(View.VISIBLE);
+
+                    ((TextView) mTimingLayout.findViewById(R.id.id_monday_hours)).setText(weekStatus[0]);
+                    ((TextView) mTimingLayout.findViewById(R.id.id_tuesday_hours)).setText(weekStatus[1]);
+                    ((TextView) mTimingLayout.findViewById(R.id.id_wednesday_hours)).setText(weekStatus[2]);
+                    ((TextView) mTimingLayout.findViewById(R.id.id_thursday_hours)).setText(weekStatus[3]);
+                    ((TextView) mTimingLayout.findViewById(R.id.id_friday_hours)).setText(weekStatus[4]);
+                    ((TextView) mTimingLayout.findViewById(R.id.id_saturday_hours)).setText(weekStatus[5]);
+                    ((TextView) mTimingLayout.findViewById(R.id.id_sunday_hours)).setText(weekStatus[6]);
+
+                } else {
+                    more.setText(getResources().getString(R.string.more));
+                    weekly_timings.setVisibility(View.GONE);
+                }
             }
+        });
+    }
+
+    /**
+     * Returns today's string from timing map
+     *
+     * @param timeMap
+     * @return
+     */
+    public static String getTodayTiming(final List<String> timeMap) {
+        if (timeMap == null || timeMap.size() == 0) {
+            return null;
         }
 
+        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        String timing;
+        switch (day) {
+            case 1: //Sunday
+                timing = timeMap.get(6);
+                return timing.substring(timing.indexOf(":") + 1);
+            case 2:
+                timing = timeMap.get(0);
+                return timing.substring(timing.indexOf(":") + 1);
+            case 3:
+                timing = timeMap.get(1);
+                return timing.substring(timing.indexOf(":") + 1);
+            case 4:
+                timing = timeMap.get(2);
+                return timing.substring(timing.indexOf(":") + 1);
+            case 5:
+                timing = timeMap.get(3);
+                return timing.substring(timing.indexOf(":") + 1);
+            case 6:
+                timing = timeMap.get(4);
+                return timing.substring(timing.indexOf(":") + 1);
+            case 7:
+                timing = timeMap.get(5);
+                return timing.substring(timing.indexOf(":") + 1);
+            default:
+                return null;
+        }
     }
 
     private float getDpToPixel(final int dp) {
@@ -227,7 +301,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         PreferencesHelper preference = PreferencesHelper.getPreferences(this);
         android.location.Location srcLoc = new android.location.Location("source");
         srcLoc.setLatitude(Double.valueOf( preference.getLatitude()));
-        srcLoc.setLongitude(Double.valueOf( preference.getLongtitude()));
+        srcLoc.setLongitude(Double.valueOf(preference.getLongtitude()));
 
 
         android.location.Location dstLoc = new android.location.Location("destination");
@@ -250,48 +324,48 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         return ret;
     }
 
-    private void shrinkOpenHoursLayout() {
-        if (mWeekDayItemLayout.getVisibility() == View.VISIBLE) {
-            shrinkOpenHoursLayout(true);
-        } else {
-            shrinkOpenHoursLayout(false);
-        }
-    }
-
-    private void shrinkOpenHoursLayout(boolean collapse) {
-        if (collapse) {
-            if (mUpDownButton == null) {
-                mUpDownButton = (Button) mOpenHoursLayout.findViewById(R.id.updown_btn);
-            }
-            mUpDownButton.setBackground(ContextCompat.getDrawable(this, R.drawable.arrow_down));
-            mWeekDayItemLayout.setVisibility(View.GONE);
-        } else { /* Spread mode */
-            if (mUpDownButton == null) {
-                mUpDownButton = (Button) mOpenHoursLayout.findViewById(R.id.updown_btn);
-            }
-            mUpDownButton.setBackground(ContextCompat.getDrawable(this,R.drawable.arrow_up));
-            mWeekDayItemLayout.setVisibility(View.VISIBLE);
-            if (mResults != null && mResults.getOpening_hours() != null) {
-                String[] weekStatus = mResults.getOpening_hours().getWeekday_text();
-                StringBuffer days = new StringBuffer();
-                StringBuffer time = new StringBuffer();
-                int len = weekStatus.length;
-                for (int i=0; i < len; i++) {
-                    String[] split = weekStatus[i].split(": ");
-                    String[] dualTime = split[1].split(",");
-                    if (dualTime.length > 1) {
-                        time.append(dualTime[0] + "\n" + dualTime[1] + "\n");
-                        days.append(split[0] + "\n" + "\n");
-                    } else {
-                        time.append(split[1] + "\n");
-                        days.append(split[0] + "\n");
-                    }
-                }
-                mWeekdayHours.setText(time.toString());
-                mWeekdayStatus.setText(days.toString());
-            }
-        }
-    }
+//    private void shrinkOpenHoursLayout() {
+//        if (mWeekDayItemLayout.getVisibility() == View.VISIBLE) {
+//            shrinkOpenHoursLayout(true);
+//        } else {
+//            shrinkOpenHoursLayout(false);
+//        }
+//    }
+//
+//    private void shrinkOpenHoursLayout(boolean collapse) {
+//        if (collapse) {
+//            if (mUpDownButton == null) {
+//                mUpDownButton = (Button) mOpenHoursLayout.findViewById(R.id.updown_btn);
+//            }
+//            mUpDownButton.setBackground(ContextCompat.getDrawable(this, R.drawable.arrow_down));
+//            mWeekDayItemLayout.setVisibility(View.GONE);
+//        } else { /* Spread mode */
+//            if (mUpDownButton == null) {
+//                mUpDownButton = (Button) mOpenHoursLayout.findViewById(R.id.updown_btn);
+//            }
+//            mUpDownButton.setBackground(ContextCompat.getDrawable(this,R.drawable.arrow_up));
+//            mWeekDayItemLayout.setVisibility(View.VISIBLE);
+//            if (mResults != null && mResults.getOpening_hours() != null) {
+//                String[] weekStatus = mResults.getOpening_hours().getWeekday_text();
+//                StringBuffer days = new StringBuffer();
+//                StringBuffer time = new StringBuffer();
+//                int len = weekStatus.length;
+//                for (int i=0; i < len; i++) {
+//                    String[] split = weekStatus[i].split(": ");
+//                    String[] dualTime = split[1].split(",");
+//                    if (dualTime.length > 1) {
+//                        time.append(dualTime[0] + "\n" + dualTime[1] + "\n");
+//                        days.append(split[0] + "\n" + "\n");
+//                    } else {
+//                        time.append(split[1] + "\n");
+//                        days.append(split[0] + "\n");
+//                    }
+//                }
+//                mWeekdayHours.setText(time.toString());
+//                mWeekdayStatus.setText(days.toString());
+//            }
+//        }
+//    }
 
     @Override
     protected void onResume() {
@@ -340,10 +414,10 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
     public void onClick(View v) {
         final int id = v.getId();
         switch (id) {
-            case R.id.updown_btn:
-                shrinkOpenHoursLayout();
-                break;
-            case R.id.phone_layout://Call
+//            case R.id.updown_btn:
+//                shrinkOpenHoursLayout();
+//                break;
+            case R.id.call_layout://Call
                 try {
                     String phone = mResults.getInternational_phone_number();
                     if (phone != null) {
@@ -358,7 +432,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
                     e.printStackTrace();
                 }
                 break;
-            case R.id.direction_layout://Direction
+            case R.id.direction://Direction
                 try {
                     Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                             Uri.parse(AppConstants.GOOGLE_MAPS_URI
@@ -372,7 +446,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
                     e.printStackTrace();
                 }
                 break;
-            case R.id.share_layout://Share
+            case R.id.share://Share
                 try {
                     Intent share = new Intent(Intent.ACTION_SEND);
                     share.setType("text/plain");

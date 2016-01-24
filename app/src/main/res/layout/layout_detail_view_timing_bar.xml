@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:id="@+id/id_timings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5sp"
+        android:background="#e7e5e5"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/id_today_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:gravity="left"
+                android:text="@string/today_timing"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            <TextView
+                android:id="@+id/id_hours_more"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginRight="5sp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:gravity="right"
+                android:text="@string/more"
+                android:textColor="@color/aspect_color"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+        </android.support.v7.widget.LinearLayoutCompat>
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/id_week_timing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <include layout="@layout/divider_layout_white"></include>
+
+            <TextView
+                android:id="@+id/id_monday_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:gravity="left"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            <include layout="@layout/divider_layout_white"></include>
+
+            <TextView
+                android:id="@+id/id_tuesday_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:gravity="left"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            <include layout="@layout/divider_layout_white"></include>
+
+            <TextView
+                android:id="@+id/id_wednesday_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:gravity="left"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            <include layout="@layout/divider_layout_white"></include>
+
+            <TextView
+                android:id="@+id/id_thursday_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:gravity="left"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            <include layout="@layout/divider_layout_white"></include>
+
+            <TextView
+                android:id="@+id/id_friday_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:gravity="left"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            <include layout="@layout/divider_layout_white"></include>
+
+            <TextView
+                android:id="@+id/id_saturday_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:gravity="left"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+
+            <include layout="@layout/divider_layout_white"></include>
+
+            <TextView
+                android:id="@+id/id_sunday_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:gravity="left"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+        </android.support.v7.widget.LinearLayoutCompat>
+    </android.support.v7.widget.LinearLayoutCompat>
+</LinearLayout>
