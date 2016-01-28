@@ -46,5 +46,6 @@
     <string name="more">More</string>
     <string name="module_launch">Module Launch</string>
     <string name="today_timing">Today\'s timing: </string>
-    <string name="closed">Closed</string>
+    <string name="closed">Close</string>
+    <string name="reviews">Reviews</string>
 </resources>

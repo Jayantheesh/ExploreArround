@@ -72,6 +72,12 @@
             android:label="@string/title_activity_photo_viewer"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".ui.ReveiwListActivity"
+            android:parentActivityName=".ui.DetailsActivity"
+            android:label="@string/reviews"
+            android:theme="@style/NewTheme" >
+        </activity>
     </application>
 
 </manifest>
