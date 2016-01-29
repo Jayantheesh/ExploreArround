@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatRatingBar;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -74,6 +75,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
     private LinearLayoutCompat mTimingLayout;
 
     //3rd Card view
+    private CardView mImagecardView;
     private LinearLayoutCompat mImageGallery;
 
     public static void actionLaunchResultsActivity(Activity fromActivity, Result res) {
@@ -153,6 +155,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         updatePlaceTiming();
 
         //Photo - 3rd Card view
+        mImagecardView = (CardView) findViewById(R.id.imageCardView);
         mImageGallery = (LinearLayoutCompat) findViewById(R.id.imageGallery);
         if ((mResults.getPhotos() != null && mResults.getPhotos().length != 0)) {
             //String[] urls = new String[mResults.getPhotos().length];
@@ -161,6 +164,8 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
                         mResults.getPhotos()[i].getPhoto_reference() + "&key=" + AppConstants.API_KEY;
                 mImageGallery.addView(addDynamicImageView(url, i));
             }
+        } else {
+            mImagecardView.setVisibility(View.GONE);
         }
 
 
