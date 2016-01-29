@@ -191,7 +191,18 @@ public class ResultsActivity extends AppCompatActivity {
                         Toast.makeText(ResultsActivity.this, reason, Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    DetailsActivity.actionLaunchResultsActivity(ResultsActivity.this, status.getResult());
+                    Results[] res = mResults.getResults();
+                    OpenHours openHrs = res[mPosition].getOpening_hours();
+                    String open_status = "";
+                    if (openHrs != null) {
+                        boolean open = openHrs.getOpen_now();
+                        if (open) {
+                            open_status = "Open";
+                        } else {
+                            open_status = "Closed";
+                        }
+                    }
+                    DetailsActivity.actionLaunchResultsActivity(ResultsActivity.this, status.getResult(), open_status);
                 }
             });
         }

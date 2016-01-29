@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
@@ -51,6 +52,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
 
     private static final String TAG = "DetailsActivity";
     private static Result mResults = null;
+    private static String mStatus = null;
 
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private Toolbar toolbar;
@@ -78,10 +80,11 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
     private CardView mImagecardView;
     private LinearLayoutCompat mImageGallery;
 
-    public static void actionLaunchResultsActivity(Activity fromActivity, Result res) {
+    public static void actionLaunchResultsActivity(Activity fromActivity, Result res, String open_status) {
         Intent i = new Intent(fromActivity, DetailsActivity.class);
         fromActivity.startActivity(i);
         mResults = res;
+        mStatus = open_status;
     }
 
     @Override
@@ -114,7 +117,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
             mRatingBar.setRating(Float.valueOf(mResults.getRating()));
             Reviews[] reviews = mResults.getReviews();
             if (reviews != null) {
-                String count = "- " + String.valueOf(reviews.length) + " Reviews";
+                String count = " - " + String.valueOf(reviews.length) + " Reviews";
                 mRatingCount.setText(count);
                 mRatingCount.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -132,8 +135,12 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         }
 
         mOpenStatus = (TextView) findViewById(R.id.open_now);
-        mOpenStatus.setText("Open");
-        //mOpenStatus.setTextColor(getColor(R.color.color_red));
+        mOpenStatus.setText(mStatus);
+        if(mStatus.equalsIgnoreCase("Closed")) {
+            mOpenStatus.setTextColor(Color.RED);
+        } else {
+            mOpenStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
+        }
 
         //Navigation - 2nd Card view
         mDirections = (LinearLayoutCompat) findViewById(R.id.direction);
