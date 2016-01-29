@@ -125,15 +125,15 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
                         ReveiwListActivity.actionLaunchReviewActivity(DetailsActivity.this, mResults);
                     }
                 });
-                mDistance.setText(calculateDst(mResults.getGeometry().getLocation()));
             } else {
-                mRatingBarLayout.setEnabled(false);
+                //mRatingBarLayout.setEnabled(false);
             }
         } else {
-            mRatingBar.setEnabled(false);
-            mRatingBarLayout.setVisibility(View.GONE);
+            //mRatingBar.setEnabled(false);
+            mRatingCount.setText("Not rated");
+            //mRatingBarLayout.setVisibility(View.GONE);
         }
-
+        mDistance.setText(calculateDst(mResults.getGeometry().getLocation()));
         mOpenStatus = (TextView) findViewById(R.id.open_now);
         mOpenStatus.setText(mStatus);
         if(mStatus.equalsIgnoreCase("Closed")) {
