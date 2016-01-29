@@ -64,6 +64,7 @@
                     android:clickable="false"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
+                    android:progressTint="#f76707"
                     style="?android:attr/ratingBarStyleSmall" />
 
                 <View
