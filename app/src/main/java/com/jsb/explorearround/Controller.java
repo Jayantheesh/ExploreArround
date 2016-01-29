@@ -193,7 +193,7 @@ public class Controller {
         @Override
         protected void onPreExecute() {
 
-            mProgressDialog.setTitle(R.string.text_please_wait);
+            //mProgressDialog.setTitle(R.string.text_please_wait);
             mProgressDialog.setCancelable(false);
             mProgressDialog.setIndeterminate(true);
             mProgressDialog.setMessage(mContext.getResources().getString(R.string.text_downloading));
@@ -291,7 +291,7 @@ public class Controller {
         @Override
         protected void onPreExecute() {
 
-            mProgressDialog.setTitle(R.string.text_please_wait);
+            //mProgressDialog.setTitle(R.string.text_please_wait);
             mProgressDialog.setCancelable(false);
             mProgressDialog.setIndeterminate(true);
             mProgressDialog.setMessage(mContext.getResources().getString(R.string.text_downloading));
@@ -389,7 +389,7 @@ public class Controller {
         @Override
         protected void onPreExecute() {
 
-            mProgressDialog.setTitle(R.string.text_please_wait);
+            //mProgressDialog.setTitle(R.string.text_please_wait);
             mProgressDialog.setCancelable(false);
             mProgressDialog.setIndeterminate(true);
             mProgressDialog.setMessage(mContext.getResources().getString(R.string.text_downloading));
