@@ -1,8 +1,11 @@
 package com.jsb.explorearround.ui;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -352,8 +355,42 @@ public class MainActivity extends AppCompatActivity implements
             SettingsActivity.actionLaunchSettings(this);
             return true;
         }
+        /*
         if (id == R.id.action_change_location) {
             LocationSearchActivity.actionLocationSearchActivity(this);
+            return true;
+        }
+        */
+        if (id == R.id.action_about) {
+            AboutActivity.actionAboutActivity(this);
+            return true;
+        }
+        /*
+        if (id == R.id.action_change_location) {
+            LocationSearchActivity.actionLocationSearchActivity(this);
+            return true;
+        }
+        */
+        if (id == R.id.action_rate_us) {
+            final Uri marketUri = Uri.parse("market://details?id=" + "com.jsb.explorearround");
+            startActivity(new Intent(Intent.ACTION_VIEW, marketUri));
+            return true;
+        }
+
+        if (id == R.id.action_mail_us) {
+            try {
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("text/html");
+                String shareText = "Explore Arround";
+                share.putExtra(Intent.EXTRA_TEXT, shareText);
+                share.putExtra(Intent.EXTRA_EMAIL, new String[] { "jaysb.android@gmail.com" });
+                share.putExtra(Intent.EXTRA_SUBJECT, "Explore Arround");
+                startActivity(Intent.createChooser(share, "Send Email"));
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(this, "No application can handle this request.",
+                    Toast.LENGTH_LONG).show();
+                e.printStackTrace();
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);

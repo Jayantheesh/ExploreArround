@@ -3,16 +3,4 @@
     <header android:fragment="com.jsb.explorearround.ui.SettingsActivity$GeneralPreferenceFragment"
         android:title="@string/pref_header_units"
         android:icon="@drawable/ic_info_black_24dp" />
-
-    <header android:fragment="com.jsb.explorearround.ui.SettingsActivity$GeneralPreferenceFragment"
-        android:title="@string/action_rate_us"
-        android:icon="@drawable/ic_sync_black_24dp" />
-
-    <header android:fragment="com.jsb.explorearround.ui.SettingsActivity$GeneralPreferenceFragment"
-        android:title="@string/action_mail_us"
-        android:icon="@drawable/ic_info_black_24dp" />
-
-    <header android:fragment="com.jsb.explorearround.ui.SettingsActivity$GeneralPreferenceFragment"
-        android:title="@string/action_about"
-        android:icon="@drawable/ic_info_black_24dp" />
 </preference-headers>
