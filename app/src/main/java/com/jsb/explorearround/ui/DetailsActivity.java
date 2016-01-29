@@ -116,6 +116,12 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
             if (reviews != null) {
                 String count = "- " + String.valueOf(reviews.length) + " Reviews";
                 mRatingCount.setText(count);
+                mRatingCount.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ReveiwListActivity.actionLaunchReviewActivity(DetailsActivity.this, mResults);
+                    }
+                });
                 mDistance.setText(calculateDst(mResults.getGeometry().getLocation()));
             } else {
                 mRatingBarLayout.setEnabled(false);
