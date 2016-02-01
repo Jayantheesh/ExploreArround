@@ -98,6 +98,7 @@ public class ReveiwAdapter extends RecyclerView.Adapter<ReveiwAdapter.DataObject
         if (url != null) {
             url = url.startsWith("http") ? url :"https:" + url;
             Picasso.with(mContext).load(url)
+                    .transform(new CircleTransform())
                     .placeholder(R.drawable.beauty)
                     .into(holder.photo);
         }
