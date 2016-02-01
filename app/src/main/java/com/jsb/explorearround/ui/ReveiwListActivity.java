@@ -14,7 +14,9 @@ import com.jsb.explorearround.R;
 import com.jsb.explorearround.parser.Result;
 import com.jsb.explorearround.parser.Reviews;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ReveiwListActivity extends AppCompatActivity {
 
@@ -56,7 +58,7 @@ public class ReveiwListActivity extends AppCompatActivity {
 
         for (int index = 0; index < res.length; index++) {
             results.add(index, new ReviewDataObject.DataBuilder(this)
-                    .setmRatingTime(res[index].getTime())
+                    .setmRatingTime(getTime(res[index].getTime()))
                     .setmRatingText(res[index].getRating())
                     .setmAspectRatingId("Overall")
                     .setmSeparator(":")
@@ -67,6 +69,12 @@ public class ReveiwListActivity extends AppCompatActivity {
                     .build());
         }
         return results;
+    }
+
+    private String getTime(String time) {
+        Date updatedate = new Date(Long.valueOf(time) * 1000);
+        SimpleDateFormat outputFormat = new SimpleDateFormat("dd-MMM-yyyy");
+        return outputFormat.format(updatedate);
     }
 
     @Override
