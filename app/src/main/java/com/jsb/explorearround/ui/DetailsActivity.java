@@ -117,8 +117,9 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
             mRatingBar.setRating(Float.valueOf(mResults.getRating()));
             Reviews[] reviews = mResults.getReviews();
             if (reviews != null) {
-                String count = " - " + String.valueOf(reviews.length) + " Reviews";
+                String count = String.valueOf(reviews.length) + " Reviews";
                 mRatingCount.setText(count);
+                mRatingCount.setPaintFlags(mRatingCount.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                 mRatingCount.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
