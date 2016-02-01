@@ -204,8 +204,8 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
      * Update place timing details
      */
     private void updatePlaceTiming() {
-        mTimingLayout = (LinearLayoutCompat)findViewById(R.id.id_timings);
-        if(mResults == null || mResults.getOpening_hours() == null) {
+        mTimingLayout = (LinearLayoutCompat) findViewById(R.id.id_timings);
+        if (mResults == null || mResults.getOpening_hours() == null) {
             mTimingLayout.setVisibility(View.GONE);
             return;
         }
@@ -229,13 +229,25 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
                     more.setText(getResources().getString(R.string.closed));
                     weekly_timings.setVisibility(View.VISIBLE);
 
-                    ((TextView) mTimingLayout.findViewById(R.id.id_monday_hours)).setText(weekStatus[0]);
-                    ((TextView) mTimingLayout.findViewById(R.id.id_tuesday_hours)).setText(weekStatus[1]);
-                    ((TextView) mTimingLayout.findViewById(R.id.id_wednesday_hours)).setText(weekStatus[2]);
-                    ((TextView) mTimingLayout.findViewById(R.id.id_thursday_hours)).setText(weekStatus[3]);
-                    ((TextView) mTimingLayout.findViewById(R.id.id_friday_hours)).setText(weekStatus[4]);
-                    ((TextView) mTimingLayout.findViewById(R.id.id_saturday_hours)).setText(weekStatus[5]);
-                    ((TextView) mTimingLayout.findViewById(R.id.id_sunday_hours)).setText(weekStatus[6]);
+                    String days = null;
+                    String time = null;
+                    int len = weekStatus.length;
+                    int[] resIds = {R.id.id_monday_hours, R.id.id_tuesday_hours, R.id.id_wednesday_hours,
+                        R.id.id_thursday_hours, R.id.id_friday_hours, R.id.id_saturday_hours, R.id.id_sunday_hours};
+                    for (int i = 0; i < len; i++) {
+                        String[] split = weekStatus[i].split(": ");
+                        String[] dualTime = split[1].split(",");
+                        if (dualTime.length > 1) {
+                            time = dualTime[0] + dualTime[1];
+                            days = split[0];
+                        } else {
+                            time = split[1];
+                            days = split[0];
+                        }
+                        ((TextView) mTimingLayout.findViewById(resIds[i])).setText(days.substring(0, 3) + ": " + time);
+                        days = null;
+                        time = null;
+                    }
 
                 } else {
                     more.setText(getResources().getString(R.string.more));
