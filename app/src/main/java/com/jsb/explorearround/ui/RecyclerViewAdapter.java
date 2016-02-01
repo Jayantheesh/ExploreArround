@@ -140,8 +140,7 @@ public class RecyclerViewAdapter extends RecyclerView
             Picasso.with(mContext).load(url).transform(new CircleTransform()).into(holder.photo);
             holder.photo.setTag(R.string.photo_url, url);
         } else {
-            Picasso.with(mContext).load(mDataset.get(position).getIcon())
-                    .into(holder.photo);
+            Picasso.with(mContext).load(mDataset.get(position).getIcon()).transform(new CircleTransform()).into(holder.photo);
             holder.photo.setTag(R.string.photo_url, null);
 
         }
