@@ -58,17 +58,39 @@ public class ReveiwListActivity extends AppCompatActivity {
 
         for (int index = 0; index < res.length; index++) {
             results.add(index, new ReviewDataObject.DataBuilder(this)
-                    .setmRatingTime(getTime(res[index].getTime()))
-                    .setmRatingText(res[index].getRating())
-                    .setmAspectRatingId("Overall")
-                    .setmSeparator(":")
-                    .setmAspectType("Excellent")
-                    .setmImageUrl(res[index].getProfile_photo_url())
-                    .setmAuthorName(res[index].getAuthor_name())
-                    .setmReviewText(res[index].getText())
-                    .build());
+                .setmRatingTime(getTime(res[index].getTime()))
+                .setmRatingText(res[index].getRating())
+                .setmAspectRatingId(getRatingId(res[index].getAspects()[0].getRating()))
+                .setmSeparator(":")
+                .setmAspectType(res[index].getAspects()[0].getType())
+                .setmImageUrl(res[index].getProfile_photo_url())
+                .setmAuthorName(res[index].getAuthor_name())
+                .setmReviewText(res[index].getText())
+                .build());
         }
         return results;
+    }
+
+    private String getRatingId(String rating) {
+        int rat = Integer.valueOf(rating);
+        String ret = null;
+        switch (rat) {
+            case 0:
+                ret = "Poor";
+                break;
+            case 1:
+                ret = "Average";
+                break;
+            case 2:
+                ret = "Good";
+                break;
+            case 3:
+                ret = "Excellent";
+                break;
+            default:
+                ret = "Poor";
+        }
+        return ret;
     }
 
     private String getTime(String time) {
