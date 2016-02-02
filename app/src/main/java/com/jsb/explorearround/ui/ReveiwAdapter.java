@@ -93,13 +93,13 @@ public class ReveiwAdapter extends RecyclerView.Adapter<ReveiwAdapter.DataObject
 
         holder.name.setText(mDataset.get(position).getmAuthorName());
         holder.text.setText(mDataset.get(position).getmReviewText());
-        holder.photo.setImageDrawable(mContext.getResources().getDrawable(R.drawable.beauty));
+        holder.photo.setImageDrawable(mContext.getResources().getDrawable(R.drawable.face));
         String url = mDataset.get(position).getmImageUrl();
         if (url != null) {
             url = url.startsWith("http") ? url :"https:" + url;
             Picasso.with(mContext).load(url)
                     .transform(new CircleTransform())
-                    .placeholder(R.drawable.beauty)
+                    .placeholder(R.drawable.face)
                     .into(holder.photo);
         }
 
