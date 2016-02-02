@@ -14,6 +14,7 @@ import com.jsb.explorearround.R;
 import com.jsb.explorearround.parser.Result;
 import com.jsb.explorearround.parser.Reviews;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,6 +40,10 @@ public class ReveiwListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reveiw_details);
 
+        if (savedInstanceState != null) {
+            mResults = (Result) savedInstanceState.getSerializable("RESULTS");
+        }
+
         // Attaching the layout to the toolbar object
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -50,6 +55,12 @@ public class ReveiwListActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new ReveiwAdapter(getDataSet(), this);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("RESULTS", (Serializable) mResults);
+        super.onSaveInstanceState(outState);
     }
 
     private ArrayList<ReviewDataObject> getDataSet() {
