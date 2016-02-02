@@ -4,11 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import java.io.Serializable;
+
 /**
  * Created by JSB on 10/20/15.
  */
 @Parcel
-public class OpenHours {
+public class OpenHours implements Serializable {
     @SerializedName("open_now")
     private boolean open_now;
 

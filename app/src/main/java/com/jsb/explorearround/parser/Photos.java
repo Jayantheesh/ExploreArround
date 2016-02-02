@@ -4,11 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import java.io.Serializable;
+
 /**
  * Created by JSB on 11/7/15.
  */
 @Parcel
-public class Photos {
+public class Photos implements Serializable {
     @SerializedName("height")
     private String height;
 

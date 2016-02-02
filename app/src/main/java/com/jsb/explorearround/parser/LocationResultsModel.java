@@ -4,11 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import java.io.Serializable;
+
 /**
  * Created by JSB on 12/5/15.
  */
 @Parcel
-public class LocationResultsModel {
+public class LocationResultsModel implements Serializable {
 
     @SerializedName("results")
     private LocationResults[] results;
