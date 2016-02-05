@@ -22,6 +22,7 @@ import com.jsb.explorearround.parser.Results;
 import com.jsb.explorearround.utils.AppConstants;
 import com.jsb.explorearround.utils.PreferencesHelper;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -52,6 +53,10 @@ public class ResultsActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_card_view);
 
+        if (savedInstanceState != null) {
+            mResults = (Model) savedInstanceState.getSerializable("RESULTS");
+        }
+
         // Attaching the layout to the toolbar object
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
@@ -70,17 +75,22 @@ public class ResultsActivity extends AppCompatActivity {
         Controller.getsInstance(this).addResultCallback(mControllerCallback);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("RESULTS", (Serializable) mResults);
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
         ((RecyclerViewAdapter) mAdapter).setOnItemClickListener(new RecyclerViewAdapter
-                .MyClickListener() {
+            .MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
                 Controller.getInstance().getPlaceDetails(ResultsActivity.this,
-                        mResults.getResults()[position].getPlace_id());
+                    mResults.getResults()[position].getPlace_id());
                 mPosition = position;
             }
         });

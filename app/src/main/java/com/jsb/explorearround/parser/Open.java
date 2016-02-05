@@ -4,11 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import java.io.Serializable;
+
 /**
  * Created by JSB on 11/14/15.
  */
 @Parcel
-public class Open {
+public class Open implements Serializable {
     @SerializedName("day")
     private String day;
 

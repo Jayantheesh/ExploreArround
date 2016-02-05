@@ -36,6 +36,7 @@ import com.jsb.explorearround.utils.AppConstants;
 import com.jsb.explorearround.utils.PreferencesHelper;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -92,6 +93,11 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
         setContentView(R.layout.activity_details);
+
+        if (savedInstanceState != null) {
+            mResults = (Result) savedInstanceState.getSerializable("RESULTS");
+        }
+
         if (mResults == null) {
             finish();
             return;
@@ -200,6 +206,13 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("RESULTS", (Serializable) mResults);
+        super.onSaveInstanceState(outState);
+    }
+
 
     /**
      * Update place timing details
