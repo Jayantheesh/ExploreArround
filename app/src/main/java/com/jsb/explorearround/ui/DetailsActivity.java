@@ -492,29 +492,25 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
                 break;
             case R.id.share://Share
                 try {
-                    //Test code
-                    ReveiwListActivity.actionLaunchReviewActivity(this, mResults);
-
-
-//                    Intent share = new Intent(Intent.ACTION_SEND);
-//                    share.setType("text/plain");
-//                    String web = "";
-//                    String phone = "";
-//                    if (mResults.getWebsite() != null) {
-//                        web = mResults.getWebsite();
-//                    }
-//                    if (mResults.getInternational_phone_number() != null) {
-//                        phone = mResults.getInternational_phone_number();
-//                    }
-//                    String shareText = mResults.getName() + "\n" + mResults.getVicinity() + "\n"
-//                            + phone + "\n"
-//                            + web + "\n"
-//                            + mResults.getGeometry().getLocation().getLatitude()
-//                            + ","
-//                            + mResults.getGeometry().getLocation().getLongtitude();
-//                    share.putExtra(Intent.EXTRA_TEXT, shareText);
-//                    startActivity(Intent.createChooser(share,
-//                            getResources().getString(R.string.text_share_info)));
+                    Intent share = new Intent(Intent.ACTION_SEND);
+                    share.setType("text/plain");
+                    String web = "";
+                    String phone = "";
+                    if (mResults.getWebsite() != null) {
+                        web = mResults.getWebsite();
+                    }
+                    if (mResults.getInternational_phone_number() != null) {
+                        phone = mResults.getInternational_phone_number();
+                    }
+                    String shareText = mResults.getName() + "\n" + mResults.getVicinity() + "\n"
+                            + phone + "\n"
+                            + web + "\n"
+                            + mResults.getGeometry().getLocation().getLatitude()
+                            + ","
+                            + mResults.getGeometry().getLocation().getLongtitude();
+                    share.putExtra(Intent.EXTRA_TEXT, shareText);
+                    startActivity(Intent.createChooser(share,
+                            getResources().getString(R.string.text_share_info)));
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(this, R.string.text_no_app_error, Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
