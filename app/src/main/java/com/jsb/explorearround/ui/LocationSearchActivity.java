@@ -154,6 +154,7 @@ public class LocationSearchActivity extends AppCompatActivity {
                                         mResults.getResults()[position].getFormatted_address(),
                                         mResults.getResults()[position].getGeometry().getLocation().getLatitude(),
                                         mResults.getResults()[position].getGeometry().getLocation().getLongtitude());
+                                finish();
 
                             }
                         });

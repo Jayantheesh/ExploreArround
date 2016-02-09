@@ -241,7 +241,11 @@ public class MainActivity extends AppCompatActivity implements
             Log.d(TAG, "Location permission has already been granted.");
             //Enable the Location Settings
             if (LocationTracker.getsInstance(this).isLocationEnabled(MainActivity.this)) {
-                LocationTracker.getsInstance(this).getLocation();
+                PreferencesHelper preference = PreferencesHelper.getPreferences(this);
+                String location = preference.getSearchLocation();
+                if (location.equalsIgnoreCase("Current Location")) {
+                    LocationTracker.getsInstance(this).getLocation();
+                }
             }
         }
         updateLocation();

@@ -105,6 +105,6 @@ public class PreferencesHelper {
     }
 
     public String getSearchLocation() {
-        return mSharedPreferences.getString(PREFERENCE_SEARCH_LOCATION, null);
+        return mSharedPreferences.getString(PREFERENCE_SEARCH_LOCATION, "Current Location");
     }
 }
