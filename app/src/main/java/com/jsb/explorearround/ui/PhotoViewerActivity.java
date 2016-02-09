@@ -31,17 +31,8 @@ public class PhotoViewerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo_viewer);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-
-        Intent intent = getIntent();
-        if (intent != null) {
-
-        }
-
         String[] urls = new String[mPhotos.length];
         if (mPhotos.length != 0) {
-            //String[] urls = new String[mResults.getPhotos().length];
             for (int i = 0; i < mPhotos.length; i++ ) {
                 urls[i] = Controller.BASE_URL + "/maps/api/place/photo" + "?maxwidth=400&photoreference=" +
                         mPhotos[i].getPhoto_reference() + "&key=" + AppConstants.API_KEY;
