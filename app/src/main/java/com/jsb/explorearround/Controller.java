@@ -9,6 +9,8 @@ import android.view.KeyEvent;
 
 import com.jsb.explorearround.network.Connectivity;
 import com.jsb.explorearround.parser.ApiService;
+import com.jsb.explorearround.parser.Geometry;
+import com.jsb.explorearround.parser.Location;
 import com.jsb.explorearround.parser.LocationResults;
 import com.jsb.explorearround.parser.LocationResultsModel;
 import com.jsb.explorearround.parser.Model;
@@ -17,7 +19,10 @@ import com.jsb.explorearround.parser.Results;
 import com.jsb.explorearround.utils.AppConstants;
 import com.jsb.explorearround.utils.PreferencesHelper;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 import retrofit.RestAdapter;
 
@@ -429,11 +434,34 @@ public class Controller {
             mProgressDialog.dismiss();
             Log.d(TAG, "Status " + (posts.getStatus() != null));
             LocationResults[] results = posts.getResults();
+
+            // Convert array to list
+            List<LocationResults> listFromArray = Arrays.asList(results);
+
+            // Create new list, because, List to Array always returns a fixed-size list backed by the specified array.
+            List<LocationResults> tempList = new ArrayList<LocationResults>(listFromArray);
+
+            LocationResults currLoc = new LocationResults();
+            currLoc.setFormatted_address("Current Location");
+            Geometry geo = new Geometry();
+            Location loc = new Location();
+            loc.setLatitude("0.0");
+            loc.setLongtitude("0.0");
+            geo.setLocation(loc);
+            currLoc.setGeometry(geo);
+
+            tempList.add(0, currLoc);
+
+            //Convert list back to array
+            LocationResults[] newResults = new LocationResults[tempList.size()];
+            results = tempList.toArray(newResults);
+
             for (LocationResults result: results) {
                 Log.d(TAG, "Formatted Address " + result.getFormatted_address());
                 Log.d(TAG, "Lat " + result.getGeometry().getLocation().getLatitude());
                 Log.d(TAG, "Long " + result.getGeometry().getLocation().getLongtitude());
             }
+            posts.setResults(results);
 
             synchronized (mListeners) {
                 for (Result l : mListeners) {

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.jsb.explorearround.Controller;
 import com.jsb.explorearround.R;
+import com.jsb.explorearround.location.LocationTracker;
 import com.jsb.explorearround.parser.LocationResults;
 import com.jsb.explorearround.parser.LocationResultsModel;
 
@@ -120,6 +121,7 @@ public class LocationSearchActivity extends AppCompatActivity {
         return true;
     }
 
+
     /**
      * Controller result Callback.
      */
@@ -147,12 +149,12 @@ public class LocationSearchActivity extends AppCompatActivity {
                                                 + " Lat=" + mResults.getResults()[position].getGeometry().getLocation().getLatitude()
                                                 + " Long=" + mResults.getResults()[position].getGeometry().getLocation().getLongtitude(),
                                         Toast.LENGTH_SHORT).show();
-//                            if (resultLen == 1) {
-//                            LocationTracker.getsInstance(LocationSearchActivity.this).updateLocationPref(
-//                                    status.getResults()[0].getFormatted_address(),
-//                                    status.getResults()[0].getGeometry().getLocation().getLatitude(),
-//                                    status.getResults()[0].getGeometry().getLocation().getLongtitude());
-//                        }
+
+                                LocationTracker.getsInstance(LocationSearchActivity.this).updateLocationPref(
+                                        mResults.getResults()[position].getFormatted_address(),
+                                        mResults.getResults()[position].getGeometry().getLocation().getLatitude(),
+                                        mResults.getResults()[position].getGeometry().getLocation().getLongtitude());
+
                             }
                         });
                     } else {

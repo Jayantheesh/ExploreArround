@@ -355,12 +355,12 @@ public class MainActivity extends AppCompatActivity implements
             SettingsActivity.actionLaunchSettings(this);
             return true;
         }
-        /*
+
         if (id == R.id.action_change_location) {
             LocationSearchActivity.actionLocationSearchActivity(this);
             return true;
         }
-        */
+
         if (id == R.id.action_about) {
             AboutActivity.actionAboutActivity(this);
             return true;
