@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.jsb.explorearround.Controller;
 import com.jsb.explorearround.R;
 import com.jsb.explorearround.location.LocationTracker;
+import com.jsb.explorearround.parser.Geometry;
+import com.jsb.explorearround.parser.Location;
 import com.jsb.explorearround.parser.LocationResults;
 import com.jsb.explorearround.parser.LocationResultsModel;
 
@@ -60,6 +62,21 @@ public class LocationSearchActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        mAdapter = new LocationSearchRVAdapter(getDataSet(), LocationSearchActivity.this);
+        mRecyclerView.setAdapter(mAdapter);
+
+        ((LocationSearchRVAdapter) mAdapter).setOnItemClickListener(new LocationSearchRVAdapter
+            .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                LocationTracker.getsInstance(LocationSearchActivity.this).updateLocationPref(
+                    mResults.getResults()[position].getFormatted_address(),
+                    mResults.getResults()[position].getGeometry().getLocation().getLatitude(),
+                    mResults.getResults()[position].getGeometry().getLocation().getLongtitude());
+                finish();
+            }
+        });
+
         //Initialise the Controller from here
         mControllerCallback = new ControllerResults();
         Controller.getsInstance(this).addResultCallback(mControllerCallback);
@@ -87,11 +104,32 @@ public class LocationSearchActivity extends AppCompatActivity {
 
     private ArrayList<LocationSearchDataObject> getDataSet() {
         ArrayList<LocationSearchDataObject> results = new ArrayList<>();
-        LocationResults[] res = mResults.getResults();
-        for (int index = 0; index < res.length; index++) {
-            results.add(index, new LocationSearchDataObject.DataBuilder(this)
+        if (mResults != null) {
+            LocationResults[] res = mResults.getResults();
+            for (int index = 0; index < res.length; index++) {
+                results.add(index, new LocationSearchDataObject.DataBuilder(this)
                     .setName(res[index].getFormatted_address())
                     .build());
+            }
+        } else {
+            LocationResultsModel result = new LocationResultsModel();
+            LocationResults[] locRes = new LocationResults[1];
+            LocationResults currLoc = new LocationResults();
+            currLoc.setFormatted_address("Current Location");
+            Geometry geo = new Geometry();
+            Location loc = new Location();
+            loc.setLatitude("0.0");
+            loc.setLongtitude("0.0");
+            geo.setLocation(loc);
+            currLoc.setGeometry(geo);
+
+            locRes[0] = currLoc;
+            result.setResults(locRes);
+            mResults = result;
+
+            results.add(0, new LocationSearchDataObject.DataBuilder(this)
+                .setName("Current Location")
+                .build());
         }
         return results;
     }
@@ -142,18 +180,13 @@ public class LocationSearchActivity extends AppCompatActivity {
                         mAdapter = new LocationSearchRVAdapter(getDataSet(), LocationSearchActivity.this);
                         mRecyclerView.setAdapter(mAdapter);
                         ((LocationSearchRVAdapter) mAdapter).setOnItemClickListener(new LocationSearchRVAdapter
-                                .MyClickListener() {
+                            .MyClickListener() {
                             @Override
                             public void onItemClick(int position, View v) {
-                                Toast.makeText(LocationSearchActivity.this, "Address=" + mResults.getResults()[position].getFormatted_address()
-                                                + " Lat=" + mResults.getResults()[position].getGeometry().getLocation().getLatitude()
-                                                + " Long=" + mResults.getResults()[position].getGeometry().getLocation().getLongtitude(),
-                                        Toast.LENGTH_SHORT).show();
-
                                 LocationTracker.getsInstance(LocationSearchActivity.this).updateLocationPref(
-                                        mResults.getResults()[position].getFormatted_address(),
-                                        mResults.getResults()[position].getGeometry().getLocation().getLatitude(),
-                                        mResults.getResults()[position].getGeometry().getLocation().getLongtitude());
+                                    mResults.getResults()[position].getFormatted_address(),
+                                    mResults.getResults()[position].getGeometry().getLocation().getLatitude(),
+                                    mResults.getResults()[position].getGeometry().getLocation().getLongtitude());
                                 finish();
 
                             }

@@ -181,7 +181,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
             //String[] urls = new String[mResults.getPhotos().length];
             for (int i = 0; i < mResults.getPhotos().length; i++ ) {
                 String url = Controller.BASE_URL + "/maps/api/place/photo" + "?maxwidth=400&photoreference=" +
-                        mResults.getPhotos()[i].getPhoto_reference() + "&key=" + AppConstants.API_KEY;
+                    mResults.getPhotos()[i].getPhoto_reference() + "&key=" + AppConstants.API_KEY;
                 mImageGallery.addView(addDynamicImageView(url, i));
             }
         } else {
@@ -190,7 +190,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
 
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+            .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
         //setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
@@ -235,7 +235,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
             @Override
             public void onClick(View v) {
                 if (getResources().getString(R.string.more).
-                        equalsIgnoreCase(more.getText().toString())) {
+                    equalsIgnoreCase(more.getText().toString())) {
                     if (weekStatus.length  == 0) {
                         return;
                     }
@@ -319,8 +319,8 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
     private ImageView addDynamicImageView(final String url, final int currentPhoto) {
         final ImageView imageView = new ImageView(this);
         LinearLayoutCompat.LayoutParams lp = new LinearLayoutCompat.LayoutParams(
-                (int) getDpToPixel(100),
-                (int) getDpToPixel(100));
+            (int) getDpToPixel(100),
+            (int) getDpToPixel(100));
         lp.setMargins(0, 0, 10, 0);
         imageView.setLayoutParams(lp);
         imageView.setClickable(true);
@@ -329,13 +329,13 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
             @Override
             public void onClick(View v) {
                 PhotoViewerActivity.actionLaunchPhotoViewerActivity(DetailsActivity.this,
-                        currentPhoto, mResults.getPhotos());
+                    currentPhoto, mResults.getPhotos());
             }
         });
         Picasso.with(this)
-                .load(url)
-                .placeholder(R.drawable.image)
-                .into(imageView);
+            .load(url)
+            .placeholder(R.drawable.image)
+            .into(imageView);
         return imageView;
     }
 
@@ -368,49 +368,6 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
         return ret;
     }
 
-//    private void shrinkOpenHoursLayout() {
-//        if (mWeekDayItemLayout.getVisibility() == View.VISIBLE) {
-//            shrinkOpenHoursLayout(true);
-//        } else {
-//            shrinkOpenHoursLayout(false);
-//        }
-//    }
-//
-//    private void shrinkOpenHoursLayout(boolean collapse) {
-//        if (collapse) {
-//            if (mUpDownButton == null) {
-//                mUpDownButton = (Button) mOpenHoursLayout.findViewById(R.id.updown_btn);
-//            }
-//            mUpDownButton.setBackground(ContextCompat.getDrawable(this, R.drawable.arrow_down));
-//            mWeekDayItemLayout.setVisibility(View.GONE);
-//        } else { /* Spread mode */
-//            if (mUpDownButton == null) {
-//                mUpDownButton = (Button) mOpenHoursLayout.findViewById(R.id.updown_btn);
-//            }
-//            mUpDownButton.setBackground(ContextCompat.getDrawable(this,R.drawable.arrow_up));
-//            mWeekDayItemLayout.setVisibility(View.VISIBLE);
-//            if (mResults != null && mResults.getOpening_hours() != null) {
-//                String[] weekStatus = mResults.getOpening_hours().getWeekday_text();
-//                StringBuffer days = new StringBuffer();
-//                StringBuffer time = new StringBuffer();
-//                int len = weekStatus.length;
-//                for (int i=0; i < len; i++) {
-//                    String[] split = weekStatus[i].split(": ");
-//                    String[] dualTime = split[1].split(",");
-//                    if (dualTime.length > 1) {
-//                        time.append(dualTime[0] + "\n" + dualTime[1] + "\n");
-//                        days.append(split[0] + "\n" + "\n");
-//                    } else {
-//                        time.append(split[1] + "\n");
-//                        days.append(split[0] + "\n");
-//                    }
-//                }
-//                mWeekdayHours.setText(time.toString());
-//                mWeekdayStatus.setText(days.toString());
-//            }
-//        }
-//    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -433,7 +390,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
     public void onMapReady(GoogleMap map) {
         // Add a marker in Sydney, Australia, and move the camera.
         LatLng location = new LatLng(Double.valueOf(mResults.getGeometry().getLocation().getLatitude()),
-                Double.valueOf(mResults.getGeometry().getLocation().getLongtitude()));
+            Double.valueOf(mResults.getGeometry().getLocation().getLongtitude()));
         map.addMarker(new MarkerOptions().position(location).title(mResults.getName()));
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 11));
         map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -458,9 +415,6 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
     public void onClick(View v) {
         final int id = v.getId();
         switch (id) {
-//            case R.id.updown_btn:
-//                shrinkOpenHoursLayout();
-//                break;
             case R.id.call_layout://Call
                 try {
                     String phone = mResults.getInternational_phone_number();
@@ -479,10 +433,10 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
             case R.id.direction://Direction
                 try {
                     Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                            Uri.parse(AppConstants.GOOGLE_MAPS_URI
-                                    + String.valueOf(mResults.getGeometry().getLocation().getLatitude())
-                                    + ","
-                                    + String.valueOf(mResults.getGeometry().getLocation().getLongtitude())));
+                        Uri.parse(AppConstants.GOOGLE_MAPS_URI
+                            + String.valueOf(mResults.getGeometry().getLocation().getLatitude())
+                            + ","
+                            + String.valueOf(mResults.getGeometry().getLocation().getLongtitude())));
                     intent.setClassName(AppConstants.GOOGLE_MAPS_PACKAGE, AppConstants.GOOGLE_MAPS_ACTIVITY);
                     startActivity(intent);
                 } catch (ActivityNotFoundException e) {
@@ -503,14 +457,14 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
                         phone = mResults.getInternational_phone_number();
                     }
                     String shareText = mResults.getName() + "\n" + mResults.getVicinity() + "\n"
-                            + phone + "\n"
-                            + web + "\n"
-                            + mResults.getGeometry().getLocation().getLatitude()
-                            + ","
-                            + mResults.getGeometry().getLocation().getLongtitude();
+                        + phone + "\n"
+                        + web + "\n"
+                        + mResults.getGeometry().getLocation().getLatitude()
+                        + ","
+                        + mResults.getGeometry().getLocation().getLongtitude();
                     share.putExtra(Intent.EXTRA_TEXT, shareText);
                     startActivity(Intent.createChooser(share,
-                            getResources().getString(R.string.text_share_info)));
+                        getResources().getString(R.string.text_share_info)));
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(this, R.string.text_no_app_error, Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
