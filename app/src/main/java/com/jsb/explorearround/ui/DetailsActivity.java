@@ -36,7 +36,6 @@ import com.jsb.explorearround.utils.AppConstants;
 import com.jsb.explorearround.utils.PreferencesHelper;
 import com.squareup.picasso.Picasso;
 
-import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -96,6 +95,7 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
 
         if (savedInstanceState != null) {
             mResults = (Result) savedInstanceState.getSerializable("RESULTS");
+            mStatus = savedInstanceState.getString("STATUS");
         }
 
         if (mResults == null) {
@@ -209,7 +209,8 @@ public class DetailsActivity extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putSerializable("RESULTS", (Serializable) mResults);
+        outState.putSerializable("RESULTS", mResults);
+        outState.putString("STATUS", mStatus);
         super.onSaveInstanceState(outState);
     }
 
